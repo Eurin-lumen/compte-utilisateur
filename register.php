@@ -5,24 +5,61 @@
 if (!empty($_POST)){
     // gestion d'erreur avec un tableau
     $errors = array();
+    require_once 'inc/db.php';
+
 
     // verification username avec les expression régulière 
 
-    if(empty($_POST['username']) || !preg_match('/^[a-zA-Z-0-9_]+$/', $_POST['username'])){
+    if(empty($_POST['username']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['username'])){
         $errors['username'] = "Votre pseudo n'est pas valide (alphanumérique)";
 
+    }else{
+        // est ce que un utilisateur existe en avance ? dans la base de donnée
+        $req = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+        $req->execute([$_POST['username']]);
+        //fetch permet de récupérer le premier enrégistrement 
+
+        $user = $req->fetch();
+        if($user){
+            $errors['username'] = "Votre pseudo existe déjà"; 
+        }
+        
     }
 
     // verification  et validation email (format de l'email)
 
     if(empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
         $errors['email'] = "Votre email n'est pas valide ";
+    }else{
+        // est ce que l'email  existe en avance ? dans la base de donnée
+        $req = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+        $req->execute([$_POST['email']]);
+        //fetch permet de récupérer le premier enrégistrement 
+
+        $user = $req->fetch();
+        if($user){
+            $errors['email'] = "Votre email existe déjà"; 
+        }
+        
     }
     if(empty($_POST['password']) || $_POST['password'] != $_POST['password_confirm'] ){
         $errors['password'] = "Votre mot de passe n'est pas valide";
     }
 
-    debug($errors);
+    if(empty($errors)){
+        // Requete préparer 
+        $req = $pdo->prepare("INSERT INTO users SET username = ?, email = ? , password = ?");
+        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $req->execute([
+            $_POST['username'],
+            $_POST['email'],
+            $password
+        ]);
+        die("Votre compte a bien été créé"); 
+        
+    }
+
+//   debug($errors);
 
 }
 
@@ -31,6 +68,17 @@ if (!empty($_POST)){
 
 
 <h1> S'inscrire</h1>
+<?php if(!empty($errors)):?>
+ <div class="alert alert-danger">
+    <p>Vous n'avez pas rempli le formulaire correctement </p>
+    <ul>
+        <?php foreach($errors as $error):?>
+            <li><?= $error; ?></li>
+        <?php endforeach ?> 
+    </ul>
+ </div>
+
+<?php endif ?>
 
 <form action="" method="POST">
     .<div class="container">
