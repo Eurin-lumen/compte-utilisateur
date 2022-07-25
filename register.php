@@ -74,8 +74,7 @@ if (!empty($_POST)){
 <?php endif ?>
 
 <form action="" method="POST">
-    .<div class="container">
-        <form>
+    <div class="container">
             <div class="form-group row">
                 <label for="inputName" class="col-sm-1-12 col-form-label">Pseudo:</label>
                 <div class="col-sm-1-12">
@@ -89,13 +88,13 @@ if (!empty($_POST)){
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputName" class="col-sm-1-12 col-form-label">Confirmer votre mot de passe:</label>
+                <label for="inputName" class="col-sm-1-12 col-form-label">Mot mot de passe:</label>
                 <div class="col-sm-1-12">
                     <input type="password" class="form-control" name="password" id="password" placeholder="Votre mot de passe"  />
                 </div> 
             </div>
             <div class="form-group row">
-                <label for="inputName" class="col-sm-1-12 col-form-label">Mot de passe :</label>
+                <label for="inputName" class="col-sm-1-12 col-form-label">Confirmer votre mot de passe :</label>
                 <div class="col-sm-1-12">
                     <input type="password" class="form-control" name="password_confirm" id="password_confirm" placeholder="Votre mot de passe"  />
                 </div>
@@ -106,7 +105,7 @@ if (!empty($_POST)){
                     <button type="submit" class="btn btn-primary">Je m'inscris</button>
                 </div>
             </div>
-        </form>
+    
     </div>
 </form>
 
