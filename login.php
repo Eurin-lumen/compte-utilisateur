@@ -31,7 +31,7 @@ if(!empty($_POST) && !empty($_POST['username']) && !empty($_POST['password'])){
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputName" class="col-sm-1-12 col-form-label">Mot de passe:</label>
+                <label for="inputName" class="col-sm-1-12 col-form-label">Mot de passe: <a href="forget.php">(j'ai oublié mon mot de passe)</a> </label>
                 <div class="col-sm-1-12">
                     <input type="password" class="form-control" name="password" id="password" placeholder="Votre mot de passe"  />
                 </div> 
