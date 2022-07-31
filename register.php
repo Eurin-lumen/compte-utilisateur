@@ -1,11 +1,12 @@
 <?php
 require 'inc/functions.php';
+require_once 'inc/db.php';
 // est ce que des données ont été posté ??
 
 if (!empty($_POST)){
     // gestion d'erreur avec un tableau
     $errors = array();
-    require_once 'inc/db.php';
+    
     // verification username avec les expression régulière 
     if(empty($_POST['username']) || !preg_match('/^[a-zA-Z0-9_]+$/', $_POST['username'])){
         $errors['username'] = "Votre pseudo n'est pas valide (alphanumérique)";
